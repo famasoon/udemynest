@@ -22,7 +22,7 @@ import { UserUpdateDto } from './models/user-update.dto';
 @UseGuards(AuthGuard)
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   @Get()
   async all(@Query('page') page = 1): Promise<User[]> {
@@ -32,11 +32,11 @@ export class UserController {
   @Post()
   async create(@Body() body: UserCreteDto): Promise<User> {
     const hashedPassword = await bcrypt.hash('1234', 12);
+    const { role_id, ...data } = body;
     return this.userService.create({
-      first_name: body.first_name,
-      last_name: body.last_name,
-      email: body.email,
+      ...data,
       hashedPassword,
+      role: { id: role_id },
     });
   }
 
@@ -47,7 +47,11 @@ export class UserController {
 
   @Put(':id')
   async update(@Param('id') id: number, @Body() body: UserUpdateDto) {
-    await this.userService.update(id, body);
+    const { role_id, ...data } = body;
+    await this.userService.update(id, {
+      ...data,
+      role: { id: role_id },
+    });
     return this.userService.findOne({ id });
   }
 

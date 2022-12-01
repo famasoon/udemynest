@@ -24,7 +24,7 @@ export class AuthController {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   @Post('register')
   async register(@Body() body: RegisterDto) {
@@ -39,6 +39,7 @@ export class AuthController {
       last_name: body.last_name,
       email: body.email,
       password: hashed,
+      role: { id: 1 },
     });
   }
 
