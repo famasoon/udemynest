@@ -22,7 +22,7 @@ import { UserUpdateDto } from './models/user-update.dto';
 @UseGuards(AuthGuard)
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
   @Get()
   async all(@Query('page') page = 1): Promise<User[]> {
