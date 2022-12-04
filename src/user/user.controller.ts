@@ -29,7 +29,7 @@ export class UserController {
   constructor(
     private userService: UserService,
     private authService: AuthService,
-  ) { }
+  ) {}
 
   @Get()
   async all(@Query('page') page = 1) {
