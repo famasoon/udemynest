@@ -7,7 +7,6 @@ import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
 import { RoleModule } from './role/role.module';
 import { PermissionModule } from './permission/permission.module';
-import { ProductService } from './product/product.service';
 import { ProductModule } from './product/product.module';
 
 @Module({
@@ -33,4 +32,4 @@ import { ProductModule } from './product/product.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
