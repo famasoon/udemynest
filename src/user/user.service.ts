@@ -2,51 +2,27 @@ import { Injectable } from '@nestjs/common';
 import { User } from './models/user.entitiy';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { AbstractService } from 'src/common/abstract.service';
+import { PagenatedResult } from 'src/common/pagenated-result.interface';
 
 @Injectable()
-export class UserService {
+export class UserService extends AbstractService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-  ) {}
-
-  async all(): Promise<User[]> {
-    return await this.userRepository.find();
+  ) {
+    super(userRepository);
   }
 
-  async pagenate(page = 1): Promise<any> {
-    const take = 1;
-    const [users, total] = await this.userRepository.findAndCount({
-      take,
-      skip: (page - 1) * take,
-    });
+  async pagenate(page = 1, relations = []): Promise<PagenatedResult> {
+    const { data, meta } = await super.pagenate(page, relations);
 
     return {
-      data: users.map((user) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      data: data.map(user => {
         const { password, ...data } = user;
         return data;
       }),
-      meta: {
-        total,
-        page,
-        last_page: Math.ceil(total / take),
-      },
+      meta: meta,
     };
   }
 
-  async create(data): Promise<User> {
-    return this.userRepository.save(data);
-  }
-
-  async findOne(condition): Promise<User> {
-    return this.userRepository.findOne(condition);
-  }
-
-  async update(id: number, data): Promise<any> {
-    return this.userRepository.update(id, data);
-  }
-
-  async delete(id: number): Promise<any> {
-    return this.userRepository.delete(id);
-  }
 }
