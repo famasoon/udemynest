@@ -12,7 +12,7 @@ import { RoleService } from './role.service';
 
 @Controller('roles')
 export class RoleController {
-  constructor(private roleService: RoleService) {}
+  constructor(private roleService: RoleService) { }
   @Get()
   async all() {
     return this.roleService.all();
@@ -43,7 +43,7 @@ export class RoleController {
     await this.roleService.update(id, {
       name,
     });
-    const role = this.roleService.findOne({ id });
+    const role = await this.roleService.findOne({ id });
     return this.roleService.create({
       ...role,
       permissions: ids.map((id) => ({ id })),
