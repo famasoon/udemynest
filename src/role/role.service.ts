@@ -7,7 +7,7 @@ import { Role } from './role.entity';
 export class RoleService {
   constructor(
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
-  ) {}
+  ) { }
 
   async all(): Promise<Role[]> {
     return this.roleRepository.find();
@@ -18,7 +18,9 @@ export class RoleService {
   }
 
   async findOne(condition): Promise<Role> {
-    return this.roleRepository.findOne(condition);
+    return this.roleRepository.findOne({
+      relations: ['permissions'],
+    });
   }
 
   async update(id: number, data): Promise<any> {
