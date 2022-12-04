@@ -17,12 +17,11 @@ export class UserService extends AbstractService {
     const { data, meta } = await super.pagenate(page, relations);
 
     return {
-      data: data.map(user => {
+      data: data.map((user) => {
         const { password, ...data } = user;
         return data;
       }),
       meta: meta,
     };
   }
-
 }

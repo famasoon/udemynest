@@ -4,7 +4,7 @@ import { PagenatedResult } from './pagenated-result.interface';
 
 @Injectable()
 export abstract class AbstractService {
-  protected constructor(protected readonly repository: Repository<any>) { }
+  protected constructor(protected readonly repository: Repository<any>) {}
 
   async all(relations = []): Promise<any[]> {
     return await this.repository.find({ relations });
