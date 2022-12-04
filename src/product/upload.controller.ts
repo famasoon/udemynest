@@ -10,7 +10,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { Response } from 'express'
+import { Response } from 'express';
 
 @Controller()
 export class UploadController {
